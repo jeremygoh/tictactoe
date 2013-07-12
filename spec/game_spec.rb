@@ -1,5 +1,6 @@
 require 'game'
 require 'player'
+require 'board'
 
 describe Game do
 let(:game){Game.new}
@@ -78,6 +79,10 @@ then be at the back of the turn queue" do
 	game.turn << "name1"
 	game.turn << "name2"
 	board.should_receive(:fill_cell).with(0, "O")
+	checker= double :checker
+	game.checker = checker
+	checker.should_receive(:winning_line?).and_return(false)
+	board.should_receive(:all_filled?).and_return(false)
 	game.player_mark("name1", 0)
 	game.whose_turn.should eq "name2"
 end
@@ -99,23 +104,15 @@ it "should not allow player to place mark if the game is over" do
 	expect{game.player_mark("name1", 0)}.to raise_error
 end
 
-# it "should add a board when setting up which is then accessible" do
-# 	game = Game.new
-# 	game.board.should eq nil
-# 	game.setup(:player1, :player2)
-# 	game.board.should_not eq nil
-# end
-
-# it "should have players after setting up which are then accessible" do
-# 	game = Game.new
-# 	game.players.should eq nil
-# 	game.setup(:player1, :player2)
-# 	game.players.should_not eq nil
-# end
-
-# it "should have an array called mark which contains X and O" do
-
-# end
+it "should indicate the game is over if all the cells are filled" do
+	checker = double :checker
+	game.checker = checker
+	checker.should_receive(:winning_line?).and_return(false)
+	board = double :board
+	game.board = board
+	board.should_receive(:all_filled?).and_return(true)
+	game.game_over?.should be_true
+end
 
 
 end

@@ -57,4 +57,5 @@ class Checker
 		line.all?{|cell| @board.cell_filled?(cell)}
 	end
 
+
 end

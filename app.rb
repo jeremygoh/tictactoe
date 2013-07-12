@@ -14,11 +14,13 @@ enable :sessions
 
 @@game = Game.new
 
+
 get '/' do
 	erb :index
 end
 
 post '/sign_up' do
+	redirect '/' if (params[:player_name]).nil?
 	session[:player_name] = params[:player_name]
 	@@game.add_player(params[:player_name])
 	@@number_of_players +=1
@@ -26,6 +28,7 @@ post '/sign_up' do
 end
 
 get '/lobby' do
+	redirect '/' if session[:player_name].nil?
 	@number_of_players = @@number_of_players
 	erb :lobby
 end
@@ -38,11 +41,13 @@ get "/reset_game" do
 end
 
 get "/game" do
+	redirect '/' if @@number_of_players !=2
 	@game=@@game
 	erb :game
 end
 
 post "/game" do
+	redirect '/' if @@number_of_players !=2
 	@@game.player_mark(session[:player_name], params[:cell_to_fill].to_i)
 	redirect '/game'
 end

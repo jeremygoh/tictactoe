@@ -11,7 +11,7 @@ def initialize
 end
 
 def game_over?
-	@checker.winning_line?
+	@checker.winning_line? || @board.all_filled?
 end
 
 
@@ -58,6 +58,7 @@ def winner
 end
 
 def player_mark(player_name, cell_index)
+	
 	if game_over?
 		raise "The game is over, dude!"
 	elsif whose_turn != player_name

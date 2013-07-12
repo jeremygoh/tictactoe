@@ -1,5 +1,7 @@
 class Board
 
+attr_accessor :cells
+
 def initialize
 	@cells= []
 	9.times{|i| @cells << Cell.new}
@@ -22,5 +24,8 @@ def cell_filled?(cell_index)
 	cells[cell_index].filled?
 end
 
+def all_filled?
+	@cells.all?{|cell| cell.filled?}
+end
 
 end

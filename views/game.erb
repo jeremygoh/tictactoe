@@ -3,9 +3,11 @@
 
 <% if @game.whose_turn==session[:player_name] && !@game.game_over? %>
 <h3><%=session[:player_name]%>, it's your turn! Just click a square to place your mark!</h3>
-<% elsif @game.game_over? %>
+<% elsif @game.game_over? && @game.winner.nil? %>
 
 <h3>The game is over!</h3>
+<h3>The game was a draw</h3>
+<% elsif @game.game_over? %>
 <h3>The winner is <%= @game.winner %></h3>
 
 <% else %>
@@ -15,7 +17,7 @@
 <% end %>
 
 
-<h3>Your symbol is <%=@game.player_mark_from_name(session[:player_name])%></h3>
+<h4 class="game">Your symbol is <%=@game.player_mark_from_name(session[:player_name])%></h4>
 
 <div class="board">
 
