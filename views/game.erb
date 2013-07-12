@@ -1,0 +1,29 @@
+<div class="game">
+
+<h3>Your symbol is <%=@game.player_mark_from_name(session[:player_name])%></h3>
+
+<% if @game.whose_turn==session[:player_name] %>
+<h3><%=session[:player_name]%>, it's your turn! Just click a square to place your mark!</h3>
+<% else %>
+<h3> It's not your turn just yet. <a href="/game">Refresh</a> the page to get an update</h3>
+<% end %>
+
+<div class="board">
+
+
+<% [0,1,2,3,4,5,6,7,8].each_slice(3) do |row| %>
+	<form action="/game" method="post" class="board">
+	<div class="row">
+	<% row.each do |x| %>
+		<input type="radio" id='<%=x%>' onclick="this.form.submit();" name="cell_to_fill" class="cell" value='<%= x%>' <%= "disabled" if @game.board.cell_filled?(x) || @game.whose_turn != session[:player_name]%>>
+		<label for='<%=x%>' class='cell <%=@game.board.check_cell(x)%>'></label>
+	<% end %>
+	</div>
+<% end %>
+	</form>
+
+</div>
+
+
+
+</h3>

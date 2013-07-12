@@ -1,0 +1,72 @@
+div.sign-up{
+	text-align:center;
+	margin: 200px;
+	margin-top: 150px;
+	margin-left: 250px;
+
+}
+
+div.index{
+	text-align:center;
+	margin-top:200px;
+	margin-bottom:10px;
+}
+
+div.footer{
+	margin-left: 1000px;
+}
+
+.start.btn{
+	margin-left: 400px;
+	margin-top: 300px;
+	margin-bottom: 250px;
+}
+
+input[type="radio"]{
+	display: none;
+}
+
+label.cell{
+	border: 1px solid black;
+	height: 40px;
+	width: 40px;
+
+}
+
+div.row{
+	display: inline-block;
+	margin-left: 2px;
+	margin-right: 1px;
+}
+
+div.board{
+	margin-left: 350px;
+	margin-top: 100px;
+	margin-bottom: 100px;
+}
+
+label:hover.cell{
+	background-color: black;
+}
+
+input:disabled + label:hover{
+	background-color: white;
+	}
+
+label.cell.O{
+	background-image: url('circle.png');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

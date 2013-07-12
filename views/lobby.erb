@@ -1,0 +1,10 @@
+<div class="lobby">
+	<h3>Hi <%= session[:player_name] %>!</h3>
+	<% if @number_of_players == 2 %>
+		<a href="/game" class="start btn btn-success">Start Game</a>
+	<% else %>
+		<h2>Waiting for another player</h2>
+		<h2>Please <a href="lobby">refresh</a> the page to check if the game is ready to begin.</h2>
+	<% end %>	
+
+</div>
