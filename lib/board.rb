@@ -14,5 +14,13 @@ def fill_cell(cell_index, mark)
 	cell.fill(mark)
 end
 
+def check_cell(cell_index)
+	cells[cell_index].state
+end
+
+def cell_filled?(cell_index)
+	cells[cell_index].filled?
+end
+
 
 end

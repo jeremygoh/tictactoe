@@ -1,16 +1,19 @@
 class Game
 
+attr_accessor :checker, :board
+
 def initialize
 	@players=[]
 	@board = Board.new
 	@marks = ["X", "O"]
 	@turn = []
-	@checker = Checker.new
+	@checker = Checker.new(@board)
 end
 
-def checker
-	@checker
+def game_over?
+	@checker.winning_line?
 end
+
 
 def turn
 	@turn
@@ -45,9 +48,39 @@ def whose_turn
 	player_turn
 end
 
+def winner
+	winner_name = nil
+	@players.each do |player|
+		if player.mark == @checker.winner
+			winner_name = player.name
+			break
+		end
+	end
+	return winner_name
+end
 
+def player_mark(player_name, cell_index)
+	if whose_turn != player_name
+		raise "It's not your turn"
+	else
+		@board.fill_cell(cell_index, player_mark_from_name(player_name))
+	end
+end
 
+def player_mark_from_name(player_name)
+	player_from_name(player_name).mark
+end
 
+def player_from_name(player_name)
+	player_object = nil
+	@players.each do |player|
+		if player.name == player_name
+			player_object = player
+			break
+		end
+	end
+	player_object
+end
 
 
 end

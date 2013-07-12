@@ -1,4 +1,5 @@
 require 'game'
+require 'player'
 
 describe Game do
 let(:game){Game.new}
@@ -22,6 +23,7 @@ end
 it "should initialize with a checker" do
 	game.checker.should_not be_nil
 end
+
 
 it "should allow a player to be added, taking in a name as an argument, creating a new player instance which is added to @players
 and which randomly selects a mark, and which is then deleted from marks" do
@@ -50,8 +52,44 @@ it "should be able to determine whose turn it is, this should alternate" do
 	game.whose_turn.should eq :name2
  end
 
+it "should be able to check if the game is over which involves calling winning line with checker?" do
+	checker= double :checker
+	game.checker = checker
+	checker.should_receive(:winning_line?)
+	game.game_over?	
+end
+
+it "should be able to check who the winner is" do
+	checker = double :checker
+	checker.should_receive(:winner).and_return("O")
+	game.checker = checker
+	game.players << Player.new("name1", :board, "O")
+	game.winner.should eq "name1"
+end
+
+it "should be able to determine a player from his name" do
+	game.players << Player.new("name1", :board, "O")
+	game.player_from_name("name1").mark.should eq "O"
+end
 
 
+it "should allow player to place his mark on a chosen cell on the board" do
+	board = double :board
+	game.players << Player.new("name1", board, "O")
+	game.board = board
+	game.turn << "name1"
+	board.should_receive(:fill_cell).with(0, "O")
+	game.player_mark("name1", 0)
+end
+
+it "should not allow player to place mark if not his turn" do
+	board = double :board
+	game.players << Player.new("name1", board, "O")
+	game.board = board
+	board.should_not_receive(:fill_cell).with(0, "O")
+	game.turn.pop
+	expect{game.player_mark("name1", 0)}.to raise_error
+end
 
 
 # it "should add a board when setting up which is then accessible" do

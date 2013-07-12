@@ -22,4 +22,5 @@ def fill(cell_index)
 	@board.fill_cell(cell_index, @mark)
 end
 
+
 end
