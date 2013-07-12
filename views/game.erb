@@ -1,12 +1,21 @@
 <div class="game">
 
-<h3>Your symbol is <%=@game.player_mark_from_name(session[:player_name])%></h3>
 
-<% if @game.whose_turn==session[:player_name] %>
+<% if @game.whose_turn==session[:player_name] && !@game.game_over? %>
 <h3><%=session[:player_name]%>, it's your turn! Just click a square to place your mark!</h3>
+<% elsif @game.game_over? %>
+
+<h3>The game is over!</h3>
+<h3>The winner is <%= @game.winner %></h3>
+
 <% else %>
+
 <h3> It's not your turn just yet. <a href="/game">Refresh</a> the page to get an update</h3>
+
 <% end %>
+
+
+<h3>Your symbol is <%=@game.player_mark_from_name(session[:player_name])%></h3>
 
 <div class="board">
 
@@ -15,7 +24,7 @@
 	<form action="/game" method="post" class="board">
 	<div class="row">
 	<% row.each do |x| %>
-		<input type="radio" id='<%=x%>' onclick="this.form.submit();" name="cell_to_fill" class="cell" value='<%= x%>' <%= "disabled" if @game.board.cell_filled?(x) || @game.whose_turn != session[:player_name]%>>
+		<input type="radio" id='<%=x%>' onclick="this.form.submit();" name="cell_to_fill" class="cell" value='<%= x%>' <%= "disabled" if @game.board.cell_filled?(x) || @game.whose_turn != session[:player_name] || @game.game_over?%>>
 		<label for='<%=x%>' class='cell <%=@game.board.check_cell(x)%>'></label>
 	<% end %>
 	</div>
@@ -26,4 +35,3 @@
 
 
 
-</h3>

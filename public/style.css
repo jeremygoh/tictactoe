@@ -55,6 +55,14 @@ input:disabled + label:hover{
 
 label.cell.O{
 	background-image: url('circle.png');
+	background-size: 40px 40px;
+	background-color: transparent;
+}
+
+label.cell.X{
+	background-image: url('cross1.png');
+	background-size: 40px 40px;
+	background-color: transparent;
 }
 
 
