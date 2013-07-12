@@ -28,7 +28,7 @@ end
 
 it "can't be filled if it has already been filled in" do
 	cell.fill("X")
-	expect{cell.fill("O")}.to raise_error
+	expect{cell.fill("O")}.to raise_error("Cell already filled in.")
 end
 
 end

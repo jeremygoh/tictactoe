@@ -10,7 +10,7 @@ end
 
 def fill(mark)
 	if filled?
-		raise 
+		raise "Cell already filled in."
 	else	
 		@state=mark
 	end
