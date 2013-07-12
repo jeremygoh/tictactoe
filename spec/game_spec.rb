@@ -43,13 +43,10 @@ it "should not allow more than two players to be added" do
 	expect{game.add_player(:name)}.to raise_error("Can't have more than two players!")
 end
 
-it "should be able to determine whose turn it is, this should alternate" do
+it "should be able to determine whose turn it is, this is the first in the array" do
 	game.add_player(:name1)
 	game.add_player(:name2)
 	game.whose_turn.should eq :name1
-	game.whose_turn.should eq :name2
-	game.whose_turn.should eq :name1
-	game.whose_turn.should eq :name2
  end
 
 it "should be able to check if the game is over which involves calling winning line with checker?" do
@@ -73,13 +70,16 @@ it "should be able to determine a player from his name" do
 end
 
 
-it "should allow player to place his mark on a chosen cell on the board" do
+it "should allow player to place his mark on a chosen cell on the board
+then be at the back of the turn queue" do
 	board = double :board
 	game.players << Player.new("name1", board, "O")
 	game.board = board
 	game.turn << "name1"
+	game.turn << "name2"
 	board.should_receive(:fill_cell).with(0, "O")
 	game.player_mark("name1", 0)
+	game.whose_turn.should eq "name2"
 end
 
 it "should not allow player to place mark if not his turn" do
@@ -91,6 +91,13 @@ it "should not allow player to place mark if not his turn" do
 	expect{game.player_mark("name1", 0)}.to raise_error
 end
 
+it "should not allow player to place mark if the game is over" do
+	checker = double :checker
+	game.checker = checker
+	game.players << Player.new("name1", :board, "O")
+	checker.should_receive(:winning_line?).and_return(:true)
+	expect{game.player_mark("name1", 0)}.to raise_error
+end
 
 # it "should add a board when setting up which is then accessible" do
 # 	game = Game.new

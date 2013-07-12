@@ -2,7 +2,7 @@ class Checker
 
 	def initialize(board)
 		@board = board
-		@winner
+		@winner = nil
 		@rows = [[0,1,2], [3,4,5], [6,7,8]]
 		@columns = [[0,3,6], [1,4,7], [2,5,8]]
 		@diagonals = [[0,4,8], [2,4,6]]
@@ -38,7 +38,7 @@ class Checker
 		@lines.each do |line|
 			if line_filled?(line) && line_values(line).uniq.size == 1
 				flag=true
-				@winner = line_values(line).uniq
+				@winner = line_values(line).uniq.first
 				break
 			end
 		end

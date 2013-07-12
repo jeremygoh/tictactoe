@@ -43,9 +43,7 @@ def add_player(name)
 end
 
 def whose_turn
-	player_turn = @turn.shift
-	@turn << player_turn
-	player_turn
+	@turn.first
 end
 
 def winner
@@ -60,10 +58,15 @@ def winner
 end
 
 def player_mark(player_name, cell_index)
-	if whose_turn != player_name
+	if game_over?
+		raise "The game is over, dude!"
+	elsif whose_turn != player_name
 		raise "It's not your turn"
 	else
 		@board.fill_cell(cell_index, player_mark_from_name(player_name))
+		player_turn = @turn.shift
+		@turn << player_turn
+		@board
 	end
 end
 
